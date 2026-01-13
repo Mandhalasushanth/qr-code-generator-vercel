@@ -4,19 +4,5 @@
       "src": "api/generate.py",
       "use": "@vercel/python"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/generate",
-      "dest": "api/generate.py"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/templates/index.html"
-    }
   ]
 }
