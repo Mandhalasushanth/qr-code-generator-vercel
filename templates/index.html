@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>QR Code Generator</h2>
+    <input type="text" id="link" placeholder="Paste your link here">
+    <button onclick="generateQR()">Generate QR</button>
+
+    <div id="result" style="display:none;">
+        <h3>Your QR Code:</h3>
+        <img id="qrImage">
+    </div>
+</div>
+
+<script>
+function generateQR() {
+    const link = document.getElementById("link").value;
+    if (!link) {
+        alert("Please enter a link");
+        return;
+    }
+
+    fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ link })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.image) {
+            document.getElementById("qrImage").src =
+                "data:image/png;base64," + data.image;
+            document.getElementById("result").style.display = "block";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
